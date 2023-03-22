@@ -1,83 +1,102 @@
-from tkinter import *
-import tkinter as tk
 import customtkinter as ctk
-from PIL import Image, ImageTk
-from customtkinter import CTkLabel
+from tkinter import PhotoImage
 
-window =ctk.CTk()
-
-class Application():
+class App(ctk.CTk):
     def __init__(self):
-        self.window = window
-        self.theme()
-        self.display()
+        super().__init__()
+        self.homescreen_config()
         self.login_screen()
-        window.mainloop()
+
+    # Configuração da janela principal
+
+    def homescreen_config(self):
+        self.geometry('700x400')
+        self.title('Sistema de Login')
+        self.resizable(False, False)
+
+    def register_screen(self):
+
+        # Adiciona o frame do formulário de cadastro
+        self.frame_register = ctk.CTkFrame(self, width=350, height=380)
+        self.frame_register.place(x=365, y=7)
+
+        # Remove o formulário de login
+        self.frame_login.place_forget()
+
+        # Criando o titulo
+        self.label_title = ctk.CTkLabel(self.frame_register, text='Faça o seu Cadastro', font=('Century Gothic bold', 24))
+        self.label_title.grid(row=0, column=0, padx=10, pady=18)
+
+        # Campo de cadastro
+        self.label_email_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=97)
+        self.email_register_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre seu email', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff')
+        self.email_register_entry.grid(row=1, column=0, padx=10, pady=10)
+
+        self.label_username_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=145)
+        self.confirm_username_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre seu usuário', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff')
+        self.confirm_username_entry.grid(row=2, column=0, padx=10, pady=10)
+
+        self.label_password_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=193)
+        self.password_register_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre sua senha', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff', show='*')
+        self.password_register_entry.grid(row=3, column=0, padx=10, pady=10)
+    
+        # Campo de confirmação de senha
+        self.label_password_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=246)
+        self.confirm_password_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Confirme sua senha', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff', show='*')
+        self.confirm_password_entry.grid(row=4, column=0, padx=10, pady=15)
+
+        self.span = ctk.CTkLabel(self.frame_register, text='')
+        self.span.grid(row=5, column=0, padx=10, pady=8)
+
+        self.show_password = ctk.CTkCheckBox(self.frame_register, text='Mostrar senha', font=('Century Gothic bold', 12)).place(x=15, y=275)
 
 
-    def theme(self):
-        ctk.set_appearance_mode('dark')
-        ctk.set_default_color_theme('dark-blue')
+        self.button_register = ctk.CTkButton(self.frame_register, width=300, text='Inscreva-se', font=('Century Gothic bold', 16), corner_radius=15, command=self.register_screen, fg_color='green', hover_color='#050')
+        self.button_register.grid(row=7, column=0, padx=10,)
 
-    def display(self):
-        window.geometry('700x400')
-        window.resizable(False, False)
-        window.title('Login System')
-        window.iconphoto(False, PhotoImage(file='assets/img/login.png'))
+        self.button_login_back = ctk.CTkButton(self.frame_register, width=300, text='Voltar', font=('Century Gothic bold', 16), corner_radius=15, fg_color='#444', hover_color='#333', command=lambda:(self.frame_register.place_forget(), (App.login_screen(self))))
+        self.button_login_back.grid(row=8, column=0, padx=10, pady=10)
 
     def login_screen(self):
-    # imagem da tela inicial
 
-        image = Image.open('assets/img/login.png')
-        new_size = (340, 200)
-        image = image.resize(new_size)
+        # Imagens
+        self.img = PhotoImage(file='assets/img/login.png')
+        self.img = self.img.subsample(6, 6) # Reduzir a imagem para metade do tamanho original
+        self.lb_img = ctk.CTkLabel(self, text=None, image=self.img).place(x=20, y=30)
 
-        img = ImageTk.PhotoImage(image)
+        # Titulo
+        self.title = ctk.CTkLabel(self, text='Seja bem-vindo(a)!', font=('Century Gothic bold', 24))
+        self.title.grid(row=0, column=0, pady=30, padx=60)
 
-        label_img = ctk.CTkLabel(master=window, image=img, text=None)
-        label_img.place(x=5, y=150)
+        # Frame do formulário de login
+        self.frame_login = ctk.CTkFrame(self, width=350, height=380)
+        self.frame_login.place(x=365, y=10)
 
-        #frame
+        # Widgets dentro do formulário de login
+        self.label_title = ctk.CTkLabel(self.frame_login, text='Faça o seu Login', font=('Century Gothic bold', 24))
+        self.label_title.grid(row=0, column=0, padx=10, pady=30)
 
-        login_frame = ctk.CTkFrame(master=window, width=350, height=396)
-        login_frame.pack(side=RIGHT)
+        self.label_username_description = ctk.CTkLabel(self.frame_login, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=130)
+        self.username_login_entry = ctk.CTkEntry(self.frame_login, width=300, placeholder_text='Nome de usuário', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff')
+        self.username_login_entry.grid(row=1, column=0, padx=10, pady=15)
+       
+        self.label_password_description = ctk.CTkLabel(self.frame_login, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=189)
+        self.password_login_entry = ctk.CTkEntry(self.frame_login, width=300, placeholder_text='Senha', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff', show='*')
+        self.password_login_entry.grid(row=2, column=0, padx=10, pady=15)
 
-        label_tt = ctk.CTkLabel(master=window, text='Entre em sua conta!', font=('Roboto', 30, 'bold'), text_color='#7091D8').place(x=45, y=40)
+        self.span = ctk.CTkLabel(self.frame_login, text='')
+        self.span.grid(row=3, column=0, padx=10, pady=10)
+        self.show_password = ctk.CTkCheckBox(self.frame_login, text='Mostrar senha', font=('Century Gothic bold', 12)).place(x=15, y=220)
 
-        # frame widgets
+        self.button_login = ctk.CTkButton(self.frame_login, width=300, text='Login', font=('Century Gothic bold', 16), corner_radius=15, fg_color='green', hover_color='#050')
+        self.button_login.grid(row=4, column=0, padx=10, pady=10)
 
-        def alternar_senha():
-            if var.get():
-                password_entry.configure(show='')
-            else:
-                password_entry.configure(show='*')
+        self.button_register = ctk.CTkButton(self.frame_login, width=300, text='Inscreva-se', font=('Century Gothic bold', 16), corner_radius=15, command=self.register_screen)
+        self.button_register.grid(row=5, column=0, padx=10, pady=10)
 
+        self.span = ctk.CTkLabel(self.frame_login, text='Não possui uma conta? Inscreva-se!', font=('Century Gothic', 10))
+        self.span.grid(row=6, column=0, padx=10, pady=1)
 
-        title_label = ctk.CTkLabel(master=login_frame, text='Sistema de Login', font=(
-            'Roboto', 24), text_color='white', justify='center').place(x=85, y=40)
-
-        username_entry = ctk.CTkEntry(master=login_frame, placeholder_text='Nome do Usuário',
-                            width=300, font=('Roboto', 14)).place(x=25, y=105)
-        username_label = ctk.CTkLabel(master=login_frame, text='*Nome de usuário obrigatório.',
-                            text_color='gray', font=('Roboto', 9)).place(x=28, y=133)
-
-        password_entry = ctk.CTkEntry(master=login_frame,
-                            placeholder_text='Senha do Usuário',
-                            width=300,
-                            font=('Roboto', 14),
-                            show='*').place(x=25, y=175)
-        password_label = ctk.CTkLabel(master=login_frame, text='*Senha obrigatória.',
-                            text_color='gray', font=('Roboto', 9)).place(x=28, y=203)
-
-
-        var = BooleanVar()
-        check_btn = ctk.CTkCheckBox(master=login_frame,
-                                    text='Mostrar Senha',
-                                    variable=var,
-                                    command=alternar_senha).place(x=28, y=235)
-
-        login_button = ctk.CTkButton(master=login_frame, text="LOGIN", width=300).place(x=25, y=285)
-        register_button = ctk.CTkButton(master=login_frame, text="REGISTER", width=300, fg_color='green', hover_color='#2D5000').place(x=25, y=325)
-        register_span = ctk.CTkLabel(master=login_frame, text='Não tem uma conta? Cadastre-se!', font=("Roboto", 12)).place(x=25, y=360)
-
-Application()
+if __name__ == '__main__':
+    app = App()
+    app.mainloop()
