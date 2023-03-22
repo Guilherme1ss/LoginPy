@@ -33,8 +33,8 @@ class App(ctk.CTk):
         self.email_register_entry.grid(row=1, column=0, padx=10, pady=10)
 
         self.label_username_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=145)
-        self.confirm_username_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre seu usuário', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff')
-        self.confirm_username_entry.grid(row=2, column=0, padx=10, pady=10)
+        self.username_register_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre seu usuário', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff')
+        self.username_register_entry.grid(row=2, column=0, padx=10, pady=10)
 
         self.label_password_description = ctk.CTkLabel(self.frame_register, text='*Campo obrigatório', font=('Century Gothic bold', 10)).place(x=15, y=193)
         self.password_register_entry = ctk.CTkEntry(self.frame_register, width=300, placeholder_text='Cadastre sua senha', font=('Century Gothic bold', 16), corner_radius=15, border_color='#407bff', show='*')
