@@ -5,7 +5,7 @@ Este é um sistema de login criado com a biblioteca `customtkinter` e `tkinter`.
 ## Requisitos
 
 Para executar este projeto, você precisará ter o Python 3.x instalado em seu computador. Além disso, você precisará instalar a biblioteca `customtkinter` usando o seguinte comando:
-```pip install customtkinter
+```pip install customtkinter´´´
 
 ## Como usar
 
