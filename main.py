@@ -128,6 +128,19 @@ class App(ctk.CTk, BackEnd):
         self.title('Sistema de Login')
         self.resizable(False, False)
 
+    def toggle_password(self):
+        if self.var_login.get():
+            self.password_login_entry.configure(show='')
+        else:
+            self.password_login_entry.configure(show='*')
+            
+            if self.var_register.get():
+                self.password_register_entry.configure(show='')
+                self.confirm_password_register_entry.configure(show='')
+            else:
+                self.password_register_entry.configure(show='*')
+                self.confirm_password_register_entry.configure(show='*')
+
 
     def login_screen(self):
 
@@ -158,7 +171,9 @@ class App(ctk.CTk, BackEnd):
 
         self.span = ctk.CTkLabel(self.frame_login, text='')
         self.span.grid(row=3, column=0, padx=10, pady=10)
-        self.show_password = ctk.CTkCheckBox(self.frame_login, text='Mostrar senha', font=('Century Gothic bold', 12)).place(x=15, y=220)
+
+        self.var_login = BooleanVar()
+        self.show_login_password = ctk.CTkCheckBox(self.frame_login, text='Mostrar senha', font=('Century Gothic bold', 12), variable=self.var_login, command=self.toggle_password).place(x=15, y=220)
 
         self.button_login = ctk.CTkButton(self.frame_login, width=300, text='Login', font=('Century Gothic bold', 16), corner_radius=15, fg_color='green', hover_color='#050', command=self.verify_login)
         self.button_login.grid(row=4, column=0, padx=10, pady=10)
@@ -203,7 +218,8 @@ class App(ctk.CTk, BackEnd):
         self.span_register = ctk.CTkLabel(self.frame_register, text='')
         self.span_register.grid(row=5, column=0, padx=10, pady=8)
 
-        self.show_password = ctk.CTkCheckBox(self.frame_register, text='Mostrar senha', font=('Century Gothic bold', 12)).place(x=15, y=275)
+        self.var_register = BooleanVar()
+        self.show_register_password = ctk.CTkCheckBox(self.frame_register, text='Mostrar senha', font=('Century Gothic bold', 12), variable=self.var_register, command=self.toggle_password).place(x=15, y=275)
 
 
         self.button_register = ctk.CTkButton(self.frame_register, width=300, text='Inscreva-se', font=('Century Gothic bold', 16), corner_radius=15, command=self.register_user, fg_color='green', hover_color='#050')
